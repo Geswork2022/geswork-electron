@@ -39,8 +39,10 @@ app.whenReady().then(() => {
         width: width,
         height: height,
         icon: path.join(__dirname, 'assets/icon.ico'), // Windows
-        frame: false,
-        titleBarStyle: 'hidden',
+        frame: process.platform === 'darwin' ? false : true,
+        titleBarStyle: process.platform === 'darwin' ? 'hidden' : 'default',
+        autoHideMenuBar: true,
+        menuBarVisible: false,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
