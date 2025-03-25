@@ -29,28 +29,26 @@ function loadNotificationTest() {
 
 app.whenReady().then(() => {
     // Créer un menu personnalisé pour macOS
-    if (process.platform === 'darwin') {
-        const template = [
-            {
-                label: 'Geswork',  // Ce label définit le nom du premier menu
-                submenu: [
-                    { label: 'À propos de Geswork', role: 'about' },
-                    { type: 'separator' },
-                    { 
-                        label: 'Tester les notifications', 
-                        click: () => loadNotificationTest() 
-                    },
-                    { type: 'separator' },
-                    { role: 'hide', label: 'Masquer Geswork' },
-                    { type: 'separator' },
-                    { role: 'quit', label: 'Quitter Geswork' }
-                ]
-            },
-            // Autres menus si nécessaire
-        ];
-        const menu = Menu.buildFromTemplate(template);
-        Menu.setApplicationMenu(menu);
-    }
+    const template = [
+        {
+            label: 'Geswork',  // Ce label définit le nom du premier menu
+            submenu: [
+                { label: 'À propos de Geswork', role: 'about' },
+                { type: 'separator' },
+                { 
+                    label: 'Tester les notifications', 
+                    click: () => loadNotificationTest() 
+                },
+                { type: 'separator' },
+                { role: 'hide', label: 'Masquer Geswork' },
+                { type: 'separator' },
+                { role: 'quit', label: 'Quitter Geswork' }
+            ]
+        },
+        // Autres menus si nécessaire
+    ];
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
 
     const { width, height } = screen.getPrimaryDisplay().workAreaSize;
 
