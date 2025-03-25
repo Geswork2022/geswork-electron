@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Test de Notifications Geswork</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+    button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 10px 2px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 6px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Test de Notifications Geswork</h1>
+  
+  <div>
+    <label for="title">Titre de la notification:</label>
+    <input type="text" id="title" value="Geswork">
+    
+    <label for="body">Message:</label>
+    <textarea id="body" rows="3">Vous avez une nouvelle notification!</textarea>
+    
+    <button id="sendNotification">Envoyer la notification</button>
+  </div>
+  
+  <script>
+    document.getElementById('sendNotification').addEventListener('click', () => {
+      const title = document.getElementById('title').value;
+      const body = document.getElementById('body').value;
+      
+      if (window.electron && window.electron.sendNotification) {
+        window.electron.sendNotification(title, body)
+          .then(success => {
+            if (success) {
+              console.log('Notification envoyée avec succès');
+            } else {
+              console.error('Échec de l\'envoi de la notification');
+            }
+          });
+      } else {
+        alert('L\'API de notification n\'est pas disponible');
+      }
+    });
+  </script>
+</body>
+</html> 

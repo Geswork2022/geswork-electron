@@ -12,6 +12,11 @@ contextBridge.exposeInMainWorld('electron', {
         element.style.webkitAppRegion = 'drag';
       }
     });
+  },
+
+  // Fonction pour envoyer une notification
+  sendNotification: async (title, body, icon) => {
+    return await ipcRenderer.invoke('send-notification', { title, body, icon });
   }
 });
 

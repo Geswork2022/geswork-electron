@@ -1,4 +1,4 @@
-const { app, BrowserWindow, screen, Menu } = require('electron');
+const { app, BrowserWindow, screen, Menu, Notification, ipcMain } = require('electron');
 const path = require('path');
 
 if (process.platform === 'darwin') {
@@ -13,6 +13,20 @@ if (process.platform === 'darwin') {
 
 let mainWindow;
 
+function loadNotificationTest() {
+    const notifWindow = new BrowserWindow({
+        width: 500,
+        height: 500,
+        webPreferences: {
+            nodeIntegration: false,
+            contextIsolation: true,
+            preload: path.join(__dirname, 'preload.js')
+        }
+    });
+    
+    notifWindow.loadFile(path.join(__dirname, 'notification-test.html'));
+}
+
 app.whenReady().then(() => {
     // Créer un menu personnalisé pour macOS
     if (process.platform === 'darwin') {
@@ -21,6 +35,11 @@ app.whenReady().then(() => {
                 label: 'Geswork',  // Ce label définit le nom du premier menu
                 submenu: [
                     { label: 'À propos de Geswork', role: 'about' },
+                    { type: 'separator' },
+                    { 
+                        label: 'Tester les notifications', 
+                        click: () => loadNotificationTest() 
+                    },
                     { type: 'separator' },
                     { role: 'hide', label: 'Masquer Geswork' },
                     { type: 'separator' },
@@ -38,11 +57,11 @@ app.whenReady().then(() => {
     mainWindow = new BrowserWindow({
         width: width,
         height: height,
-        icon: path.join(__dirname, 'assets/icon.ico'), // Windows
+        icon: process.platform === 'darwin' ? path.join(__dirname, 'assets/icon.icns') : path.join(__dirname, 'assets/icon.ico'),
         frame: process.platform === 'darwin' ? false : true,
         titleBarStyle: process.platform === 'darwin' ? 'hidden' : 'default',
-        autoHideMenuBar: true,
-        menuBarVisible: false,
+        autoHideMenuBar: process.platform === 'darwin' ? false : true,
+        menuBarVisible: process.platform === 'darwin' ? true : false,
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -93,9 +112,11 @@ app.on('activate', () => {
         mainWindow = new BrowserWindow({
             width: width,
             height: height,
-            icon: path.join(__dirname, 'assets/icon.icns'), // macOS
-            frame: false,
-            titleBarStyle: 'hidden',
+            icon: process.platform === 'darwin' ? path.join(__dirname, 'assets/icon.icns') : path.join(__dirname, 'assets/icon.ico'),
+            frame: process.platform === 'darwin' ? false : true,
+            titleBarStyle: process.platform === 'darwin' ? 'hidden' : 'default',
+            autoHideMenuBar: true,
+            menuBarVisible: false,
             webPreferences: {
                 nodeIntegration: false,
                 contextIsolation: true,
@@ -133,4 +154,26 @@ app.on('activate', () => {
             mainWindow = null;
         });
     }
+});
+
+// Fonction pour envoyer une notification
+function sendNotification(title, body, icon) {
+    if (Notification.isSupported()) {
+        const notification = new Notification({
+            title: title,
+            body: body,
+            icon: icon || path.join(__dirname, 'assets/icon.png'),
+            silent: false
+        });
+        
+        notification.show();
+        return true;
+    }
+    return false;
+}
+
+// Écouteur d'événement IPC pour les notifications
+ipcMain.handle('send-notification', (event, args) => {
+    const { title, body, icon } = args;
+    return sendNotification(title, body, icon);
 });
