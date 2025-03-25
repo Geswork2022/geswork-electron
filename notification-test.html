@@ -51,9 +51,10 @@
     document.getElementById('sendNotification').addEventListener('click', () => {
       const title = document.getElementById('title').value;
       const body = document.getElementById('body').value;
+      const icon = "https://geswork-bucket.s3.eu-west-3.amazonaws.com/avatars/99/KAzIUei2UbId7Kw83kjfoDZq5QsNkJLr0NyxO73a.jpg";
       
-      if (window.electron && window.electron.sendNotification) {
-        window.electron.sendNotification(title, body)
+      if (window.electron && window.electron.notification.sendNotification) {
+        window.electron.notification.sendNotification(title, body, icon)
           .then(success => {
             if (success) {
               console.log('Notification envoyée avec succès');
