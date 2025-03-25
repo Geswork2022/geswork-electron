@@ -1,0 +1,19 @@
+{
+  "name": "geswork",
+  "productName": "Geswork",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^35.0.3"
+  },
+  "devDependencies": {
+    "electron-packager": "^17.1.2"
+  }
+}
