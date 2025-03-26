@@ -33,7 +33,7 @@
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "target": ["dmg", "zip"],
-      "identity": "Apple Developer ID"
+      "identity": "BWZ88224YW"
     },
     "win": {
       "icon": "assets/icon.ico",
