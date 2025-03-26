@@ -33,7 +33,7 @@
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
       "target": ["dmg", "zip"],
-      "identity": "BWZ88224YW"
+      "identity": "R5TR4GT5CG"
     },
     "win": {
       "icon": "assets/icon.ico",
