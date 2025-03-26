@@ -5,15 +5,50 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder build --mac --win",
+    "publish": "electron-builder build --mac --win --publish always"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^35.0.3"
+    "electron-updater": "^5.3.0"
   },
   "devDependencies": {
+    "electron": "^35.0.3",
+    "electron-builder": "^24.6.4",
     "electron-packager": "^17.1.2"
+  },
+  "build": {
+    "appId": "com.geswork.electron",
+    "productName": "Geswork",
+    "copyright": "Copyright © 2023 Geswork",
+    "directories": {
+      "output": "dist"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "assets/icon.icns",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "target": ["dmg", "zip"],
+      "identity": "Apple Developer ID"
+    },
+    "win": {
+      "icon": "assets/icon.ico",
+      "target": ["nsis"]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "Geswork2022",
+        "repo": "geswork-electron"
+      }
+    ]
   }
 }

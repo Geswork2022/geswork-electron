@@ -16,8 +16,19 @@ contextBridge.exposeInMainWorld('electron', {
 
   // Exposer les fonctions de notification dans un sous-objet
   notification: {
-    sendNotification: async (title, body, icon) => {
-      return await ipcRenderer.invoke('send-notification', { title, body, icon });
+    sendNotification: async (title, body, icon, url) => {
+      return await ipcRenderer.invoke('send-notification', { title, body, icon, url });
+    }
+  },
+  clipboard: {
+    readText: () => clipboard.readText(),
+    writeText: (text) => clipboard.writeText(text)
+  },
+  
+  // Ajouter les fonctions de mise à jour
+  updater: {
+    checkForUpdates: async () => {
+      return await ipcRenderer.invoke('check-for-updates');
     }
   }
 });

@@ -44,6 +44,9 @@
     <label for="body">Message:</label>
     <textarea id="body" rows="3">Vous avez une nouvelle notification!</textarea>
     
+    <label for="url">URL de redirection (optionnel):</label>
+    <input type="text" id="url" placeholder="https://pro.geswork.fr/messages">
+    
     <button id="sendNotification">Envoyer la notification</button>
   </div>
   
@@ -52,9 +55,10 @@
       const title = document.getElementById('title').value;
       const body = document.getElementById('body').value;
       const icon = "https://geswork-bucket.s3.eu-west-3.amazonaws.com/avatars/99/KAzIUei2UbId7Kw83kjfoDZq5QsNkJLr0NyxO73a.jpg";
+      const url = document.getElementById('url').value; // Récupérer l'URL (peut être vide)
       
-      if (window.electron && window.electron.notification.sendNotification) {
-        window.electron.notification.sendNotification(title, body, icon)
+      if (window.electron && window.electron.notification && window.electron.notification.sendNotification) {
+        window.electron.notification.sendNotification(title, body, icon, url)
           .then(success => {
             if (success) {
               console.log('Notification envoyée avec succès');

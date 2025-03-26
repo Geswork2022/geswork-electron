@@ -5,6 +5,7 @@ npm-debug.log
 *.exe
 *.dmg
 *.zip
+.env
 /dist
 /build
 .DS_Store
